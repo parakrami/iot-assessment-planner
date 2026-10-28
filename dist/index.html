@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Interactive enterprise IoT security assessment scoping, inventory and execution checklist.">
+  <title>IoT Assessment Planner</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#workspace">Skip to workspace</a>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Assessment navigation">
+      <div class="brand"><span class="brand-mark" aria-hidden="true">IO</span><div><strong>IoT Assessment</strong><small>Scope &amp; field planner</small></div></div>
+      <nav id="main-nav">
+        <button class="nav-item active" data-view="dashboard"><span>01</span>Dashboard</button>
+        <button class="nav-item" data-view="scope"><span>02</span>Scope builder</button>
+        <button class="nav-item" data-view="discovery"><span>03</span>Client discovery</button>
+        <button class="nav-item" data-view="inventory"><span>04</span>Asset inventory</button>
+        <button class="nav-item" data-view="checklist"><span>05</span>Test checklist</button>
+        <button class="nav-item" data-view="prerequisites"><span>06</span>Prerequisites &amp; RoE</button>
+        <button class="nav-item" data-view="onsite"><span>07</span>On-site runbook</button>
+        <button class="nav-item" data-view="pitch"><span>08</span>Client pitch</button>
+        <button class="nav-item" data-view="references"><span>09</span>Method &amp; sources</button>
+      </nav>
+      <div class="sidebar-footer"><div class="save-state"><span class="status-dot"></span><span id="save-label">Saved locally</span></div><button class="text-button" id="reset-all">Reset workspace</button></div>
+    </aside>
+
+    <main id="workspace" class="workspace">
+      <header class="topbar">
+        <button class="menu-button" id="menu-button" aria-label="Open navigation">☰</button>
+        <div><p class="eyebrow">Asset Management Company · Enterprise IoT</p><h1 id="view-title">Assessment dashboard</h1></div>
+        <div class="top-actions"><button class="button ghost" id="print-button">Print / PDF</button><button class="button primary" id="export-button">Export workspace</button><label class="button ghost file-button">Import<input type="file" id="import-file" accept="application/json"></label></div>
+      </header>
+
+      <section class="view active" id="view-dashboard">
+        <div class="hero-panel">
+          <div><p class="eyebrow light">Manager-ready assessment workspace</p><h2>Define exactly how far the IoT assessment may go.</h2><p>Build a defensible scope from passive observation through chip-level testing. Track the client’s devices, approvals, test status, evidence and exclusions in one place.</p><button class="button light" data-jump="scope">Build assessment scope</button></div>
+          <div class="scope-orbit" aria-label="IoT ecosystem layers"><span class="orbit-center">DEVICE</span><span class="orbit-tag tag-one">APP</span><span class="orbit-tag tag-two">CLOUD</span><span class="orbit-tag tag-three">RADIO</span><span class="orbit-tag tag-four">NETWORK</span></div>
+        </div>
+        <div class="metric-grid">
+          <article class="metric"><span>Selected tests</span><strong id="metric-selected">0</strong><small id="metric-total">of 0 available</small></article>
+          <article class="metric"><span>Completed</span><strong id="metric-complete">0</strong><small>pass, finding or N/A</small></article>
+          <article class="metric"><span>Findings</span><strong id="metric-findings">0</strong><small>items requiring review</small></article>
+          <article class="metric"><span>Inventory</span><strong id="metric-assets">0</strong><small>device records</small></article>
+        </div>
+        <div class="two-column">
+          <article class="panel"><div class="panel-heading"><div><p class="eyebrow">Current engagement</p><h3 id="dashboard-level">Level 1 · Logical assessment</h3></div><span class="badge" id="dashboard-touch">No physical touch</span></div><div class="progress-track"><span id="coverage-progress"></span></div><p class="muted" id="coverage-copy">Choose a scope level to calculate assessment coverage.</p><div class="boundary-list" id="dashboard-boundaries"></div></article>
+          <article class="panel attention-panel"><p class="eyebrow">Before testing</p><h3>Authorization controls the technique</h3><p>Owning a deployed device does not automatically authorize testing a manufacturer’s cloud, a building owner’s system, or a third-party radio network.</p><ul class="clean-list"><li>Written targets, locations and testing window</li><li>Named escalation contact and stop conditions</li><li>Separate approval for disruptive or invasive work</li><li>Spare units and recovery procedure for deep testing</li></ul><button class="text-link" data-jump="prerequisites">Review prerequisites →</button></article>
+        </div>
+        <article class="panel workflow-panel"><div class="panel-heading"><div><p class="eyebrow">Engagement flow</p><h3>From discovery to verified remediation</h3></div></div><div class="workflow"><div><span>01</span><strong>Understand</strong><small>Inventory, architecture, business impact</small></div><div><span>02</span><strong>Model</strong><small>Components, trust boundaries, attackers</small></div><div><span>03</span><strong>Authorize</strong><small>Targets, techniques, safety controls</small></div><div><span>04</span><strong>Assess</strong><small>Execute selected checks and preserve evidence</small></div><div><span>05</span><strong>Explain</strong><small>Impact, ownership and remediation</small></div><div><span>06</span><strong>Retest</strong><small>Verify fixes and residual risk</small></div></div></article>
+      </section>
+
+      <section class="view" id="view-scope">
+        <div class="section-intro"><div><p class="eyebrow">Scope builder</p><h2>Choose the assessment depth</h2><p>Select a baseline. Fine-tune individual permissions below. The test checklist updates automatically.</p></div><div class="scope-summary-mini"><span>Current level</span><strong id="current-level-label">Level 1</strong></div></div>
+        <div class="level-grid" id="level-grid"></div>
+        <article class="panel"><div class="panel-heading"><div><p class="eyebrow">Technique permissions</p><h3>Fine-grained scope controls</h3></div><span class="badge warning">Written approval required</span></div><p class="muted">The selected level provides defaults. Change a switch only when the client’s Rules of Engagement explicitly permits it.</p><div class="permission-grid" id="permission-grid"></div></article>
+        <div class="two-column scope-output-grid"><article class="panel"><p class="eyebrow">Included</p><h3>Planned coverage</h3><ul class="scope-list included" id="included-list"></ul></article><article class="panel"><p class="eyebrow">Excluded / conditional</p><h3>Boundary statement</h3><ul class="scope-list excluded" id="excluded-list"></ul></article></div>
+        <article class="panel"><div class="panel-heading"><div><p class="eyebrow">Statement of work</p><h3>Generated scope language</h3></div><button class="button ghost small" data-copy="scope-text">Copy</button></div><textarea id="scope-text" class="document-text" rows="12" aria-label="Generated scope statement"></textarea></article>
+      </section>
+
+      <section class="view" id="view-discovery">
+        <div class="section-intro"><div><p class="eyebrow">Client discovery</p><h2>Questions to ask before pricing</h2><p>Complete this with IT, security, facilities, physical security and the relevant vendors.</p></div><div class="completion-ring"><strong id="discovery-percent">0%</strong><span>answered</span></div></div>
+        <form id="discovery-form" class="questionnaire" autocomplete="off"></form>
+      </section>
+
+      <section class="view" id="view-inventory">
+        <div class="section-intro"><div><p class="eyebrow">Asset register</p><h2>Representative IoT inventory</h2><p>Track distinct models, revisions and firmware versions. Use separate records when the security characteristics differ.</p></div><div class="button-row"><button class="button ghost" id="seed-inventory">Add example</button><button class="button ghost" id="inventory-csv">Export CSV</button><button class="button primary" id="add-asset">+ Add asset</button></div></div>
+        <div class="inventory-help"><div><strong>Minimum identity</strong><span>Manufacturer, model, hardware revision, firmware</span></div><div><strong>Ecosystem</strong><span>Network, radio, cloud, portal, mobile app, gateway</span></div><div><strong>Ownership</strong><span>Business owner, operator, vendor, support/EOL date</span></div><div><strong>Impact</strong><span>Data handled, physical function, criticality, recovery</span></div></div>
+        <div class="table-wrap"><table class="inventory-table"><thead><tr><th>Asset ID</th><th>Device / model</th><th>HW / FW version</th><th>Location / network</th><th>Connectivity</th><th>Ecosystem</th><th>Owner / vendor</th><th>Criticality</th><th>Support / notes</th><th></th></tr></thead><tbody id="inventory-body"></tbody></table></div>
+        <div class="empty-state" id="inventory-empty"><strong>No devices recorded</strong><p>Add one representative record per distinct model, hardware revision and firmware version.</p><button class="button primary" data-add-asset>Add first asset</button></div>
+      </section>
+
+      <section class="view" id="view-checklist">
+        <div class="section-intro"><div><p class="eyebrow">Assessment execution</p><h2>IoT test checklist</h2><p>Scope-aware checks for enterprise deployments. Status and notes are stored in this browser.</p></div><div class="completion-ring"><strong id="checklist-percent">0%</strong><span>complete</span></div></div>
+        <div class="checklist-toolbar"><label class="search-field"><span>Search</span><input type="search" id="checklist-search" placeholder="ID, task, evidence or category"></label><label><span>Category</span><select id="category-filter"><option value="all">All categories</option></select></label><label><span>Status</span><select id="status-filter"><option value="all">All statuses</option><option>Not started</option><option>In progress</option><option>Pass</option><option>Finding</option><option>N/A</option></select></label><label class="inline-check"><input type="checkbox" id="show-out-scope"><span>Show out-of-scope checks</span></label><button class="button ghost" id="clear-filters">Clear filters</button></div>
+        <div id="checklist-groups"></div>
+      </section>
+
+      <section class="view" id="view-prerequisites">
+        <div class="section-intro"><div><p class="eyebrow">Readiness gate</p><h2>Prerequisites and Rules of Engagement</h2><p>Do not begin active testing until mandatory authorization and safety items are satisfied.</p></div><div class="readiness-box"><strong id="readiness-percent">0%</strong><span>ready</span></div></div>
+        <div class="gate-banner" id="gate-banner"><span>HOLD</span><div><strong>Mandatory controls are incomplete</strong><p>Resolve all red-flag items before active testing.</p></div></div><div class="prereq-grid" id="prereq-grid"></div>
+        <article class="panel"><div class="panel-heading"><div><p class="eyebrow">Stop-work triggers</p><h3>Pause and call the client immediately when…</h3></div></div><div class="stop-grid" id="stop-grid"></div></article>
+      </section>
+
+      <section class="view" id="view-onsite">
+        <div class="section-intro"><div><p class="eyebrow">On-site runbook</p><h2>A controlled field sequence</h2><p>Use this order to reduce operational risk and preserve a clear activity record.</p></div></div>
+        <div class="timeline" id="onsite-timeline"></div>
+        <article class="panel kit-panel"><div><div class="panel-heading"><div><p class="eyebrow">Equipment</p><h3>Bring by confirmed interface</h3></div></div><p class="muted">Do not connect to an unknown target until its electrical characteristics and ownership are confirmed.</p></div><div id="kit-grid" class="kit-grid"></div></article>
+      </section>
+
+      <section class="view" id="view-pitch">
+        <div class="section-intro"><div><p class="eyebrow">Client conversation</p><h2>Pitch the outcome, then the techniques</h2><p>For an AMC, the primary concern is whether a connected office or building device can expose confidential information, surveillance, physical access, or corporate systems.</p></div></div>
+        <div class="pitch-layout"><article class="pitch-card"><span>30-second pitch</span><blockquote id="short-pitch"></blockquote><button class="button light small" data-copy="short-pitch">Copy pitch</button></article><article class="panel"><p class="eyebrow">Recommended first engagement</p><h3>Enterprise IoT Discovery &amp; Exposure Assessment</h3><p>Inventory the estate, validate configuration and access controls, review segmentation and third-party access, then select a small number of high-risk devices for deeper testing.</p><div class="deliverable-tags"><span>Verified inventory</span><span>Architecture map</span><span>Risk-ranked findings</span><span>30/60/90 plan</span><span>Retest</span></div></article></div>
+        <article class="panel"><div class="panel-heading"><div><p class="eyebrow">Proposal language</p><h3>Detailed client pitch</h3></div><button class="button ghost small" data-copy="long-pitch">Copy</button></div><textarea id="long-pitch" class="document-text" rows="15"></textarea></article>
+        <div class="package-grid" id="package-grid"></div>
+        <article class="panel"><p class="eyebrow">Deliverables</p><h3>What the client receives</h3><div class="deliverables-grid" id="deliverables-grid"></div></article>
+      </section>
+
+      <section class="view" id="view-references">
+        <div class="section-intro"><div><p class="eyebrow">Methodology</p><h2>How this planner was constructed</h2><p>The checklist combines recognized IoT testing structures with the operational needs of an enterprise device operator.</p></div></div>
+        <div class="method-grid"><article class="panel"><span class="source-number">01</span><h3>Model the device and attacker</h3><p>OWASP ISTG recommends building a device model, defining the attacker perspective, selecting applicable tests, and using stable test identifiers for reproducible reporting.</p></article><article class="panel"><span class="source-number">02</span><h3>Cover chip to cloud</h3><p>Professional service catalogs consistently cover hardware, firmware, radio and network communication, companion applications, cloud APIs and the update mechanism.</p></article><article class="panel"><span class="source-number">03</span><h3>Profile to the use case</h3><p>NIST’s baseline is a starting point that should be filtered for the device, deployment and organization—not treated as a universal pass/fail certification.</p></article></div>
+        <article class="panel sources-panel"><p class="eyebrow">Primary references</p><h3>Professional guides and service catalogs reviewed</h3><div id="source-list"></div></article>
+        <article class="panel note-panel"><strong>Adaptation note</strong><p>Payatu’s public material is oriented toward product makers and deep device testing. This planner preserves that full-stack model while adding enterprise-operator concerns such as inventory accuracy, VLAN segmentation, facilities ownership, vendor remote access, support status and safe production testing.</p></article>
+      </section>
+    </main>
+  </div>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
