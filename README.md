@@ -34,8 +34,8 @@ The planner draws on OWASP IoT Security Testing Guide structures, NIST IoT devic
 
 Use this planner only for systems and activities covered by explicit written authorization. Third-party cloud services, invasive hardware work, radio interaction, firmware modification, reset operations, and availability testing require clearly defined scope and operating conditions.
 
-## Private demo
+## Public website
 
-The deployed Sites version is available to its authorized owner at:
+The assessment planner is publicly available at:
 
-https://iot-assessment-planner.spunkylemur20.chatgpt.site
+https://parakrami.github.io/iot-assessment-planner/
